@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    networks:
+      - mynet
+    volumes:
+      - db_spring:/var/lib/mysql
+    ports:
+    - target: 3306
+      published: 3333
+    env_file: mysql.env
+
+
+  spring:
+    container_name: spring
+    image: cloud:v1
+    env_file: user.env
+    ports:
+    - target: 8080
+      published: 8888
+    networks:
+      - mynet
+    depends_on:
+      - mysql
+
+networks:
+  mynet:
+volumes:
+  db_spring:
