@@ -15,7 +15,8 @@ services:
 
   spring:
     container_name: spring
-    image: cloud:v1
+    build: .
+    #image: cloud:v1
     env_file: user.env
     ports:
     - target: 8080
