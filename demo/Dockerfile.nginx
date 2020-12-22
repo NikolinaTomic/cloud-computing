@@ -1,0 +1,4 @@
+FROM nginx:1.19.6
+COPY load-balancer.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
