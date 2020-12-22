@@ -26,9 +26,10 @@ public class Controller {
     public ResponseEntity<String> count(){
         String pass = System.getenv("password");
         String user = System.getenv("user");
+        String host = System.getenv("host");
         Counter counter = (Counter) counterRepository.getOne(1l);
         counter.setCount(counter.getCount()+1);
         counterRepository.save(counter);
-        return ResponseEntity.ok(String.format("User:" + user + ", Password: " + pass + ", Counter: " + counter.getCount()+" "));
+        return ResponseEntity.ok(String.format("Host:" + host +", User:" + user + ", Password: " + pass + ", Counter: " + counter.getCount()+" "));
     }
 }

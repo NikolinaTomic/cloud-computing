@@ -1,32 +1,70 @@
 version: "3.7"
 services:
-  mysql:
-    container_name: mysql
+  mysql1:
+    container_name: mysql1
     image: mysql:5.7
     networks:
       - mynet
     volumes:
-      - db_spring:/var/lib/mysql
+      - db_spring1:/var/lib/mysql
     ports:
     - target: 3306
-      published: 3333
+      published: 3331
+    env_file: mysql.env
+
+  mysql2:
+    container_name: mysql2
+    image: mysql:5.7
+    networks:
+      - mynet
+    volumes:
+      - db_spring2:/var/lib/mysql
+    ports:
+    - target: 3306
+      published: 3332
     env_file: mysql.env
 
 
-  spring:
-    container_name: spring
+  spring1:
+    container_name: spring1
     build: .
-    #image: cloud:v1
-    env_file: user.env
+    env_file: user1.env
     ports:
     - target: 8080
-      published: 8888
+      published: 8881
     networks:
       - mynet
     depends_on:
-      - mysql
+      - mysql1
+
+  spring2:
+    container_name: spring2
+    build: .
+    env_file: user2.env
+    ports:
+    - target: 8080
+      published: 8882
+    networks:
+      - mynet
+    depends_on:
+      - mysql2
+
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+    - target: 5000
+      published: 5000
+    networks:
+      - mynet
+    depends_on: 
+      - spring1
+      - spring2
 
 networks:
   mynet:
 volumes:
-  db_spring:
+  db_spring1:
+  db_spring2:
