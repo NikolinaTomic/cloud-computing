@@ -27,7 +27,7 @@ services:
 
   spring1:
     container_name: spring1
-    build: .
+    image: ninjat/cloud:v1.0.0
     env_file: user1.env
     ports:
     - target: 8080
@@ -39,7 +39,7 @@ services:
 
   spring2:
     container_name: spring2
-    build: .
+    image: ninjat/cloud:v1.0.0
     env_file: user2.env
     ports:
     - target: 8080
